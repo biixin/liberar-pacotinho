@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aguarde um momento!</title>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+
+      fbq('init', '1048203047320566'); // Substitua YOUR_PIXEL_ID pelo seu ID do Pixel
+      fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff4757 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        overflow: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: float 20s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes float {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.98);
+        padding: 2.5rem 1.5rem;
+        border-radius: 24px;
+        box-shadow: 0 25px 70px rgba(255, 75, 43, 0.4), 0 10px 30px rgba(0, 0, 0, 0.2);
+        max-width: 380px;
+        width: 100%;
+        position: relative;
+        animation: slideUp 0.5s ease-out;
+        backdrop-filter: blur(10px);
+      }
+
+      @keyframes slideUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .icon-wrapper {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1.5rem;
+        position: relative;
+      }
+
+      .spinner {
+        width: 80px;
+        height: 80px;
+        border: 5px solid rgba(255, 107, 53, 0.2);
+        border-top: 5px solid #ff6b35;
+        border-right: 5px solid #f7931e;
+        border-radius: 50%;
+        animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .pulse-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        border: 3px solid #ff6b35;
+        border-radius: 50%;
+        animation: pulse 1.5s ease-out infinite;
+        opacity: 0;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translate(-50%, -50%) scale(0.8);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1.4);
+          opacity: 0;
+        }
+      }
+
+      h1 {
+        background: linear-gradient(135deg, #ff6b35, #ff4757);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.5px;
+      }
+
+      p {
+        color: #666;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+
+      .checkmark {
+        display: none;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff6b35, #f7931e);
+        position: relative;
+        box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+      }
+
+      .checkmark::after {
+        content: '';
+        position: absolute;
+        left: 28px;
+        top: 16px;
+        width: 20px;
+        height: 35px;
+        border: solid white;
+        border-width: 0 4px 4px 0;
+        transform: rotate(45deg);
+      }
+
+      .checkmark.show {
+        display: block;
+        animation: scaleInBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      @keyframes scaleInBounce {
+        0% { transform: scale(0) rotate(0deg); }
+        50% { transform: scale(1.1) rotate(10deg); }
+        100% { transform: scale(1) rotate(0deg); }
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 107, 53, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 2rem;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ff6b35, #f7931e, #ff4757);
+        border-radius: 10px;
+        animation: progress 1.5s ease-out;
+        box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+      }
+
+      @keyframes progress {
+        0% { width: 0%; }
+        100% { width: 100%; }
+      }
+
+      .dots {
+        display: inline-block;
+        animation: dots 1.5s steps(4, end) infinite;
+      }
+
+      @keyframes dots {
+        0%, 20% { content: '.'; }
+        40% { content: '..'; }
+        60%, 100% { content: '...'; }
+      }
+
+      @media (max-width: 380px) {
+        .container {
+          padding: 2rem 1.25rem;
+          border-radius: 20px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        p {
+          font-size: 0.95rem;
+        }
+
+        .icon-wrapper {
+          width: 70px;
+          height: 70px;
+        }
+
+        .spinner {
+          width: 70px;
+          height: 70px;
+        }
+
+        .checkmark {
+          width: 70px;
+          height: 70px;
+        }
+
+        .checkmark::after {
+          left: 24px;
+          top: 13px;
+          width: 18px;
+          height: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+    </noscript>
+
+    <div class="container">
+      <div class="icon-wrapper">
+        <div class="pulse-ring"></div>
+        <div class="spinner" id="spinner"></div>
+        <div class="checkmark" id="checkmark"></div>
+      </div>
+      <h1 id="message">Você está indo para o Privacy da Daynara<span class="dots">...</span></h1>
+      <p id="submessage">Aguarde um momento</p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+
+    <script>
+      // Dispara o evento Purchase ao carregar a página
+      fbq('track', 'Purchase', {
+        value: 10.00,
+        currency: 'BRL'
+      });
+
+      // Após 1 segundo, redireciona para a página final
+      setTimeout(function() {
+        // Mostra o checkmark antes de redirecionar
+        document.getElementById('spinner').style.display = 'none';
+        document.querySelector('.pulse-ring').style.display = 'none';
+        document.getElementById('checkmark').classList.add('show');
+        document.getElementById('message').innerHTML = 'Você está indo pro site!';
+        document.getElementById('submessage').textContent = 'Redirecionando...';
+
+        // Aguarda mais 500ms para mostrar a confirmação visual
+        setTimeout(function() {
+          window.location.href = 'https://privacy-daynara1.vercel.app/';
+        }, 3000);
+      }, 5000);
+    </script>
+  </body>
+</html>
